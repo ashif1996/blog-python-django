@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+{% extends 'base.html' %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}TechCorner | TechBlog{% endblock %}</title>
+</head>
+<body>
+<h1 class="content">TechBlog</h1>
+<br>
+<ul>
+    {% for post in object_list %}
+    <li><a href="{% url 'article-details' post.pk %}" style="text-transform: uppercase;">
+            {{ post.title }}</a>
+        <a href="{% url 'category' post.category|slugify %}">
+            ({{ post.category }})</a>
+        <small>
+            - {{ post.author.first_name }}
+            {{ post.author.last_name }}
+            ({{ post.post_date }})
+        </small><br>
+        {{ post.snippet }}
+    </li><br>
+    {% endfor %}
+</ul>
+
+</body>
+</html>
+
+{% endblock %}

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}TechCorner | Profile Page{% endblock %}</title>
+</head>
+<body>
+    <h1 class="content">User Profile</h1><br>
+    <div class="card mb-3">
+  <div class="row g-0">
+    <div class="col-md-4">
+    {% if page_user.profile_pic %}
+      <img src="{{ page_user.profile_pic.url }}" class="img-fluid rounded-start" style="border-radius: 50%;">
+    {% else %}
+       <i class="bi bi-person-circle"></i>
+    {% endif %}
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title" style="text-transform: uppercase;">{{ page_user.user.first_name }} {{ page_user.user.last_name }}</h5>
+        <p class="card-text">
+            {% if page_user.facebook_url %}
+                <a href="{{ page_user.facebook_url }}" class="btn-floating btn-sm" style="font-size:25px;">
+                <i class="bi bi-facebook"></i></a>
+            {% endif %}
+
+            {% if page_user.twitter_url %}
+                <a href="{{ page_user.twitter_url }}"
+                   class="btn-floating btn-sm" style="font-size:25px;">
+                <i class="bi bi-twitter"></i></a>
+            {% endif %}
+
+            {% if page_user.instagram_url %}
+                <a href="{{ page_user.instagram_url }}"
+                   class="btn-floating btn-sm" style="font-size:25px;">
+                <i class="bi bi-instagram"></i></a>
+            {% endif %}
+
+            {% if page_user.pinterest_url %}
+                <a href="{{ page_user.pinterest_url }}"
+                   class="btn-floating btn-sm" style="font-size:25px;">
+                <i class="bi bi-pinterest"></i></a>
+            {% endif %}
+
+        </p>
+        <br>
+          <p class="card-text">
+              {{ page_user.bio }}
+          </p>
+
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
+
+{% endblock %}

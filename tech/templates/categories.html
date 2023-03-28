@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+{% extends 'base.html' %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}TechCorner | Categories{% endblock %}</title>
+</head>
+<body>
+    {% if category_posts %}
+    <h1 class="content">{{ cats }}</h1>
+    <br>
+    <ul>
+    {% for post in category_posts %}
+        <li><a href="{% url 'article-details' post.pk %}" style="text-transform: uppercase;">
+            {{ post.title }}</a> -
+            <small>
+                {{ post.author.first_name }}
+                {{ post.author.last_name }}
+                ({{ post.post_date }})
+            </small><br>
+                {{ post.snippet|safe }}
+        </li><br>
+    {% endfor %}
+    </ul>
+    {% else %}
+        <h2 class="content">Sorry this page does not exist...</h2>
+    {% endif %}
+</body>
+</html>
+
+{% endblock %}

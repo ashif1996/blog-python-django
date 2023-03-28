@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}TechCorner | {{ post.title }}{% endblock %}</title>
+</head>
+<body>
+    <h1 class="content" style="text-transform: uppercase;">{{ post.title }} </h1>
+        <small> By:
+            <a href="{% url 'profile_page' post.author.userprofile.id %}">
+            {{ post.author.first_name }}
+                {{ post.author.last_name }}</a>
+                - {{ post.post_date }}
+
+            {% if user.is_authenticated %}
+                {% if user.id == post.author.id %}
+            - <a href="{% url 'update_post' post.pk %}"><button class="btn btn-primary edit">Edit</button></a>
+                <a href="{% url 'delete_post' post.pk %}"><button class="btn btn-danger edit">Delete</button></a>
+                {% endif %}
+            {% endif %}
+
+        </small><br><br>
+
+        {% if post.author.userprofile.profile_pic %}
+            <img src="{{ post.author.userprofile.profile_pic.url }}" width="30" height="30" class="rounded-circle" style="margin-top: -10px;">
+        {% else %}
+            <i class="bi bi-person-circle"></i>
+        {% endif %}
+
+        {% if post.author.userprofile.facebook_url %}
+            <a href="{{ page_user.facebook_url }}"
+               class="btn-floating btn-sm" style="font-size:25px;">
+            <i class="bi bi-facebook"></i></a>
+        {% endif %}
+
+        {% if post.author.userprofile.twitter_url %}
+            <a href="{{ page_user.twitter_url }}"
+               class="btn-floating btn-sm" style="font-size:25px;">
+            <i class="bi bi-twitter"></i></a>
+        {% endif %}
+
+        {% if post.author.userprofile.instagram_url %}
+            <a href="{{ page_user.instagram_url }}"
+               class="btn-floating btn-sm" style="font-size:25px;">
+            <i class="bi bi-instagram"></i></a>
+        {% endif %}
+
+        {% if post.author.userprofile.pinterest_url %}
+            <a href="{{ page_user.pinterest_url }}"
+               class="btn-floating btn-sm" style="font-size:25px;">
+            <i class="bi bi-pinterest"></i></a>
+        {% endif %}
+
+        <hr>
+        <br>
+        {% if post.header_image %}
+            <img src="{{ post.header_image.url }}" class="header_img"><br>
+            {{ post.body|safe }}
+        {% else %}
+            {{ post.body|safe }}
+        {% endif %}
+        <hr>
+        <form action="{% url 'like_post' post.pk %}" method="POST">
+            {% csrf_token %}
+            {% if user.is_authenticated %}
+                {% if liked %}
+                    <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-danger btn-sm">Unlike</button>
+                {% else %}
+                    <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-primary btn-sm">Like</button>
+                {% endif %}
+            {% else %}
+                <small><a href="{% url 'login' %}">Login</a> to like</small>
+            {% endif %}
+                - {{ total_likes }} Likes
+        </form><hr><br>
+        <h2>Comments</h2><br>
+
+    {% if not post.comments.all %}
+        No comments yet <a href="{% url 'add_comment' post.pk %}">Add one</a><br><br>
+    {% else %}
+        <a href="{% url 'add_comment' post.pk %}">Add a comment</a><br><br>
+        {% for comment in post.comments.all %}
+            <strong>{{ comment.name }} - {{ comment.date_added }}
+            </strong><br>
+            {{ comment.body }} <br><br>
+        {% endfor %}
+    {% endif %}
+
+</body>
+</html>
+
+{% endblock %}

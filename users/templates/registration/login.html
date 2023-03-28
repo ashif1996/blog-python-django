@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+{% extends 'base.html' %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}TechCorner | Login Page{% endblock %}</title>
+</head>
+<body>
+    <h1 class="content">Login</h1><br>
+        <div class="mb-3">
+        <form method="post">
+            {% csrf_token %}
+        <form>
+          <div class="mb-3">
+            <input type="text" class="form-control" name="username" placeholder="username" style="width: 300px;">
+          </div>
+          <div class="mb-3">
+            <input type="password" class="form-control" name="password" placeholder="password" style="width: 300px;">
+          </div>
+            <button class="btn btn-info">Login</button>
+        </form><br>
+            Not Registered? Sign Up <a href="{% url 'register' %}">Here..</a>
+</body>
+</html>
+
+{% endblock %}

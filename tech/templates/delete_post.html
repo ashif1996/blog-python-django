@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+{% extends 'base.html' %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}TechCorner | Delete Blog Post{% endblock %}</title>
+</head>
+<body>
+{% if user.is_authenticated %}
+    {% if user.id == post.author.id %}
+        <h1 class="content">Delete: {{ post.title }}</h1><br>
+            <div class="mb-3">
+                <form method="post">
+                {% csrf_token %}
+                <strong>Are you sure? </strong><br><br>
+                <button class="btn btn-info">Delete</button>
+                </form>
+            </div>
+    {% else %}
+    You're not allowed here...
+    {% endif %}
+
+{% else %}
+
+You must be logged in to visit this page!!!
+
+{% endif %}
+</body>
+</html>
+
+{% endblock %}

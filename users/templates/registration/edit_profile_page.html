@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+{% extends 'base.html' %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}TechCorner | Edit Profile Page{% endblock %}</title>
+</head>
+<body>
+
+{% if user.is_authenticated %}
+    {% if user.id == userprofile.user.id %}
+        <h1 class="content">Edit Your Profile</h1><br>
+            <div class="mb-3">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button class="btn btn-info">Update</button>
+            </form>
+            </div>
+    {% else %}
+    You have no permission to edit this page...
+    {% endif %}
+{% else %}
+You must be logged in to visit this page!!!
+{% endif %}
+
+</body>
+</html>
+
+{% endblock %}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+{% extends 'base.html' %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Create A New Post{% endblock %}</title>
+</head>
+<body>
+{% if user.is_authenticated %}
+    <h1 class="content">Add A New Post</h1><br>
+        <div class="mb-3">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.media }}
+            {{ form.as_p }}
+            <button class="btn btn-info">Submit</button>
+        </form>
+        </div>
+    <script>
+        var name = "{{ user.id }}";
+        document.getElementById("user").value = name;
+    </script>
+{% else %}
+
+You must be logged in to visit this page!!!
+
+{% endif %}
+</body>
+</html>
+
+{% endblock %}
